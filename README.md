@@ -8,7 +8,7 @@ Ao baixar/clonar, execute `npm install` para instalar as dependências e depois 
 
 ## Live preview
 
-Acesse [Lojinha](lojinha-nu.vercel.app) para visualizar a página de demonstração.
+Acesse [Lojinha](https://lojinha-nu.vercel.app) para visualizar a página de demonstração.
 
 ## Todo
 
