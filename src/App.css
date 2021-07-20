@@ -1,38 +1,87 @@
 .App {
-  text-align: center;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	background-color: rgb(255, 242, 242);
+	height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+header {
+	flex-shrink: 0;
+	background-color: antiquewhite;
+	margin: 0;
+	padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+header h2 {
+	margin: 0;
+	padding: 20px;
+	color: rgb(243, 31, 102);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.produtos {
+	flex-shrink: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	padding: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.produtos div {
+	width: 123px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex-shrink: 0;
+	background-color: rgb(255, 217, 217);
+	border-radius: 3px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.produtos div * {
+	margin: 5px;
+}
+
+.carrinho {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	flex-shrink: 0;
+	justify-self: flex-end !important;
+	background-color: rgb(223, 206, 241);
+	display: flex;
+	flex-direction: column;
+}
+
+.carrinho.active {
+	box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.carrinhoInfo {
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.botoesAcao {
+	display: flex;
+	gap: 5px;
+}
+
+.listaCarrinho {
+	transition: 0.2s all;
+	height: 0px;
+	background-color: red;
+	display: flex;
+	flex-direction: column;
+	justify-content:space-between;
+}
+
+.carrinho.active .listaCarrinho {
+	height: 400px;
+}
+
+.listaBotoes {
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
 }
