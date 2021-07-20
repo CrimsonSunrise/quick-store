@@ -6,23 +6,39 @@ const localStorage = window.localStorage;
 const produtos = [
 	{
 		nome: "Carrinho de mão",
-		"preco": 1.50
+		preco: 1.50
 	},
 	{
 		nome: "Pá",
-		"preco": 1.10
+		preco: 1.10
 	},
 	{
 		nome: "Facão",
-		"preco": 0.8
+		preco: 0.8
 	},
 	{
 		nome: "Telha",
-		"preco": 0.2
+		preco: 0.2
 	},
 	{
 		nome: "Tijolo",
-		"preco": 0.15
+		preco: 0.15
+	},
+	{
+		nome: "Colher de pedreiro",
+		preco: 0.75
+	},
+	{
+		nome: "Capacete de segurança",
+		preco: 0.87
+	},
+	{
+		nome: "Prego",
+		preco: 0.08
+	},
+	{
+		nome: "Parafuso",
+		preco: 0.12
 	}
 ]
 
@@ -38,11 +54,30 @@ function App() {
 	}, [])
 	
 	const [carrinhoQtd, setCarrinhoQtd] = useState(0);
+	const [total, setTotal] = useState(0);
 	const carrinho = useRef<HTMLDivElement>(null);
+	const divListaProdutos = useRef<HTMLDivElement>(null);
+	const usuario = useRef<HTMLDivElement>(null);
 	
 	const verCarrinho = () => {
-		console.log(localStorage.getItem("produtos"))
 		carrinho.current.className = "carrinho active"
+		
+		calcularProdutos();
+		
+	}
+	
+	const calcularProdutos = () => {
+		if(localStorage.getItem("produtos") !== "") {
+			const listaProdutosArray = localStorage.getItem("produtos").split(",")
+			const listaProdutos:any = {};
+			listaProdutosArray.forEach(function(i) { listaProdutos[i] = (listaProdutos[i]||0) + 1;});
+						
+			divListaProdutos.current.innerHTML = ''
+			
+			for (const [key, value] of Object.entries(listaProdutos)) {
+				divListaProdutos.current.innerHTML += `<div><span>${key}</span><span>${value}</span></div>`
+			}
+		}
 	}
 	
 	const fecharCarrinho = () => {
@@ -58,13 +93,25 @@ function App() {
 			localStorage.setItem("produtos", produto.nome)
 		}
 		
-		console.log(localStorage.getItem("produtos"))
+		setTotal( total + produto.preco )
+		
+		calcularProdutos()
 	}
 	
 	const limparCarrinho = () => {
 		setCarrinhoQtd(0)
+		setTotal(0)
 		localStorage.setItem("produtos", "")
-		console.log(localStorage.getItem("produtos"))
+		divListaProdutos.current.innerHTML = ''
+		carrinho.current.className = "carrinho"
+	}
+	
+	const finalizarCompra = () => {
+		usuario.current.className = "usuario active"
+	}
+	
+	const voltarAoCarrinho = () => {
+		usuario.current.className = "usuario"
 	}
 	
 	return (
@@ -83,6 +130,7 @@ function App() {
 						return (
 							<div key={index}>
 								<span>{produto.nome}</span>
+								<span>{produto.preco}</span>
 								<button onClick={(e) => { adicionarItem(produto) }}>Adicionar</button>
 							</div>
 						)
@@ -104,18 +152,50 @@ function App() {
 				
 				<div className="listaCarrinho">
 					
-					<div className="listaProdutos">
+					<div ref={divListaProdutos} className="listaProdutos">
 						
-						Lista de produtos!
 						
+						
+					</div>
+					
+					<div>
+						Total <b>{total.toFixed(2)}</b>
 					</div>
 					
 					<div className="listaBotoes">
 						<button onClick={() => { fecharCarrinho() }}>Continuar comprando</button>
-						<button onClick={() => {}}>Finalizar compra</button>
+						<button onClick={() => { finalizarCompra() }}>Finalizar compra</button>
 					</div>
 					
 				</div>
+				
+				<div ref={usuario} className="usuario">
+					
+					<h3>Complete seu cadastro</h3>
+					
+					<div>
+						<span>Nome completo</span>
+						<input type="text" placeholder="nome completo"/>
+					</div>
+					
+					<div>
+						<span>Email</span>
+						<input type="email" placeholder="email"/>
+					</div>
+					
+					<div>
+						<span>Endereço para entrega</span>
+						<input type="text" placeholder="endereço"/>
+					</div>
+					
+					<div className="finalizarBotoes">
+						<button onClick={() => { voltarAoCarrinho() }}>voltar</button>
+						<button>Cadastrar e finalizar</button>
+					</div>
+					
+					
+				</div>				
+				
 			</div>
 			
 		</div>

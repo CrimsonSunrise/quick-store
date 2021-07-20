@@ -8,7 +8,7 @@
 
 header {
 	flex-shrink: 0;
-	background-color: antiquewhite;
+	background-color: rgb(250, 173, 198);
 	margin: 0;
 	padding: 0;
 }
@@ -23,6 +23,7 @@ header h2 {
 	flex-shrink: 0;
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: space-around;
 	gap: 10px;
 	padding: 10px;
 }
@@ -50,6 +51,7 @@ header h2 {
 	background-color: rgb(223, 206, 241);
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
 }
 
 .carrinho.active {
@@ -70,18 +72,76 @@ header h2 {
 .listaCarrinho {
 	transition: 0.2s all;
 	height: 0px;
-	background-color: red;
 	display: flex;
 	flex-direction: column;
 	justify-content:space-between;
+	overflow: auto;
 }
 
 .carrinho.active .listaCarrinho {
-	height: 400px;
+	height: 350px;
+}
+
+.listaProdutos {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding: 10px;
+}
+
+.listaProdutos div {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 10px;
+	background-color: white;
+	border-radius: 5px;
 }
 
 .listaBotoes {
 	padding: 20px;
 	display: flex;
 	justify-content: space-between;
+}
+
+.usuario {
+	transition: 0.2s all;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: thistle;
+	gap: 10px;
+	left: 100%;
+}
+
+.usuario.active {
+	left: 0;
+}
+
+.usuario div {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	gap: 5px;
+}
+
+.usuario input {
+	width: 300px;
+	background-color: white;
+	border-radius: 3px;
+	padding: 10px 15px;
+	border: 0;
+	outline: 0;
+}
+
+.usuario div span {
+	text-align: left;
+}
+
+.finalizarBotoes {
+	display: flex;
+	flex-direction: row !important;
 }
