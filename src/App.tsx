@@ -58,6 +58,9 @@ function App() {
 	const carrinho = useRef<HTMLDivElement>(null);
 	const divListaProdutos = useRef<HTMLDivElement>(null);
 	const usuario = useRef<HTMLDivElement>(null);
+	const [nome, setNome] = useState('');
+	const [email, setEmail] = useState('');
+	const [endereco, setEndereco] = useState('');
 	
 	const verCarrinho = () => {
 		carrinho.current.className = "carrinho active"
@@ -106,12 +109,19 @@ function App() {
 		carrinho.current.className = "carrinho"
 	}
 	
-	const finalizarCompra = () => {
+	const cadastrarUsuario = () => {
 		usuario.current.className = "usuario active"
 	}
 	
+	const finalizarCompra = () => {
+		localStorage.setItem("nome", nome)
+		localStorage.setItem("email", email)
+		localStorage.setItem("endereço", endereco)
+		console.log(nome, email, endereco)
+	}
+	
 	const voltarAoCarrinho = () => {
-		usuario.current.className = "usuario"
+		usuario.current.className = "usuario";
 	}
 	
 	return (
@@ -164,7 +174,7 @@ function App() {
 					
 					<div className="listaBotoes">
 						<button onClick={() => { fecharCarrinho() }}>Continuar comprando</button>
-						<button onClick={() => { finalizarCompra() }}>Finalizar compra</button>
+						<button onClick={() => { cadastrarUsuario() }}>Finalizar compra</button>
 					</div>
 					
 				</div>
@@ -175,22 +185,22 @@ function App() {
 					
 					<div>
 						<span>Nome completo</span>
-						<input type="text" placeholder="nome completo"/>
+						<input onChange={(e) => { setNome(e.target.value) }} type="text" placeholder="nome completo"/>
 					</div>
 					
 					<div>
 						<span>Email</span>
-						<input type="email" placeholder="email"/>
+						<input onChange={(e) => { setEmail(e.target.value) }} type="email" placeholder="email"/>
 					</div>
 					
 					<div>
 						<span>Endereço para entrega</span>
-						<input type="text" placeholder="endereço"/>
+						<input onChange={(e) => { setEndereco(e.target.value) }} type="text" placeholder="endereço"/>
 					</div>
 					
 					<div className="finalizarBotoes">
 						<button onClick={() => { voltarAoCarrinho() }}>voltar</button>
-						<button>Cadastrar e finalizar</button>
+						<button onClick={() => { finalizarCompra() }} >Cadastrar e finalizar</button>
 					</div>
 					
 					
