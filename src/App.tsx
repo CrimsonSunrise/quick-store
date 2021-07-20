@@ -119,7 +119,7 @@ function App() {
 			
 			<header>
 				
-				<h2>Lojinha do João</h2>
+				<h2>Lojinha</h2>
 				
 			</header>
 			
