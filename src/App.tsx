@@ -39,32 +39,32 @@ const produtos = [
     {
         nome: "Soft Drinks",
         preco: 3.5,
-        color: "#a5f3fc",
+        color: "#7dd3fc",
     },
     {
         nome: "Water",
         preco: 3.5,
-        color: "#a5f3fc",
+        color: "#7dd3fc",
     },
     {
         nome: "Fruit Shoot",
         preco: 2,
-        color: "#a5f3fc",
+        color: "#7dd3fc",
     },
     {
         nome: "Mini Jellies",
         preco: 1.5,
-        color: "#bbf7d0",
+        color: "#99f6e4",
     },
     {
         nome: "Jellies",
         preco: 3.5,
-        color: "#bbf7d0",
+        color: "#99f6e4",
     },
     {
         nome: "Kids Box",
         preco: 10.5,
-        color: "#bbf7d0",
+        color: "#99f6e4",
     },
 ];
 
@@ -100,28 +100,38 @@ function App() {
 
     const calcularProdutos = () => {
         if (localStorage.getItem("produtos") !== "") {
-			
-			let storageProdutos = localStorage.getItem("produtos");
-			// console.log(storageProdutos)
-			
-			// setCarrinhoQtd(JSON.parse(localStorage.getItem("produtos"))?.length);
-			
-            const listaProdutosArray = JSON.parse(localStorage.getItem("produtos"));
-            const listaProdutos = {} as any;
+            let storageProdutos = localStorage.getItem("produtos");
+            // console.log(storageProdutos)
 
-			setTotal(0);
-            listaProdutosArray?.map(function (i:any) {
-				produtos.forEach(p => {
-					if (p.nome == i) {
-						setTotal(total + p.preco);
-					}
-				})
+            // setCarrinhoQtd(JSON.parse(localStorage.getItem("produtos"))?.length);
+
+            const listaProdutosArray = JSON.parse(
+                localStorage.getItem("produtos")
+            );
+			
+            let listaProdutos = {} as any;
+
+            setTotal(0);
+            listaProdutosArray?.map(function (i: any) {
+                produtos.forEach((p) => {
+                    if (p.nome == i) {
+                        setTotal(total + p.preco);
+                    }
+                });
                 listaProdutos[i] = (listaProdutos[i] || 0) + 1;
             });
 
+            const ordered = Object.keys(listaProdutos)
+                .sort()
+                .reduce((obj:any, key) => {
+                    obj[key] = listaProdutos[key];
+                    return obj;
+                }, {});
+			
+			listaProdutos = ordered;
+				
             divListaProdutos.current.innerHTML = "";
-			
-			
+
             // setListCart(listaProdutos);
 
             let newList = [];
@@ -132,9 +142,7 @@ function App() {
                         name: key,
                         count: value,
                     });
-					
-					
-					
+
                     let div = document.createElement("div");
                     let produtoName = document.createElement("span");
                     produtoName.innerHTML = key;
@@ -147,36 +155,41 @@ function App() {
                     removeOneButton.innerHTML = "-1";
                     removeOneButton.className = "removeOneButton";
                     removeOneButton.addEventListener("click", () => {
-						// produtos.forEach(p => {
-						// 	if (p.nome == key) {
-						// 		setTotal(total - p.preco);
-						// 	}
-						// })
+                        // produtos.forEach(p => {
+                        // 	if (p.nome == key) {
+                        // 		setTotal(total - p.preco);
+                        // 	}
+                        // })
                         // console.log(key);
-                        const storage = JSON.parse(localStorage.getItem("produtos"));
-						// console.log(storage)
-						for (let i = 0; i < storage.length; i++) {
-							if (key === storage[i]) {
-								// console.log(storage[i])
-								storage.splice(i, 1);
-								break;
-							}
-						}
-						// console.log(storage)
-						localStorage.setItem("produtos", JSON.stringify(storage))
-						
+                        const storage = JSON.parse(
+                            localStorage.getItem("produtos")
+                        );
+                        // console.log(storage)
+                        for (let i = 0; i < storage.length; i++) {
+                            if (key === storage[i]) {
+                                // console.log(storage[i])
+                                storage.splice(i, 1);
+                                break;
+                            }
+                        }
+                        // console.log(storage)
+                        localStorage.setItem(
+                            "produtos",
+                            JSON.stringify(storage)
+                        );
+
                         calcularProdutos();
-						let newTotal = 0;
-						// setTotal(0);
-						storage.map(function (i:any) {
-							produtos.forEach(p => {
-								if (p.nome == i) {
-									newTotal+= p.preco;
-								}
-							})
-							// listaProdutos[i] = (listaProdutos[i] || 0) + 1;
-						});
-						setTotal(newTotal);
+                        let newTotal = 0;
+                        // setTotal(0);
+                        storage.map(function (i: any) {
+                            produtos.forEach((p) => {
+                                if (p.nome == i) {
+                                    newTotal += p.preco;
+                                }
+                            });
+                            // listaProdutos[i] = (listaProdutos[i] || 0) + 1;
+                        });
+                        setTotal(newTotal);
                     });
 
                     div.appendChild(produtoName);
@@ -205,22 +218,21 @@ function App() {
 
     const adicionarItem = (produto: any) => {
         setCarrinhoQtd(carrinhoQtd + 1);
-		
-        let prods = localStorage.getItem("produtos") as any
-		
-		if (prods == "" || prods == null) {
-			prods = []
-		} else {
-			prods = JSON.parse(prods)			
-		}
-		
-		prods.push(produto.nome)
-		
-		// console.log(prods)
-		
-		
+
+        let prods = localStorage.getItem("produtos") as any;
+
+        if (prods == "" || prods == null) {
+            prods = [];
+        } else {
+            prods = JSON.parse(prods);
+        }
+
+        prods.push(produto.nome);
+
+        // console.log(prods)
+
         localStorage.setItem("produtos", JSON.stringify(prods));
-        
+
         // setTotal(total + produto.preco);
 
         calcularProdutos();

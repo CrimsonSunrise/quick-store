@@ -53,10 +53,11 @@ header h2 {
         // background-color: rgb(255, 217, 217);
         // background-color: white;
         border-radius: 8px;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 6px;
+        box-shadow: rgba(149, 157, 165, 0.4) 0px 4px 6px;
         
         &:active {
             scale: 0.95;
+            box-shadow: rgba(149, 157, 165, 0.6) 0px 2px 4px;
         }
         
         span {
@@ -68,7 +69,7 @@ header h2 {
         div {
             position: absolute;
             bottom: 10px;
-            color: #666;
+            color: #444;
         }
         
         .produtoCount {
@@ -130,7 +131,7 @@ header h2 {
     }
     
     .carrinhoTotal {
-        font-size: 22px;
+        font-size: 24px;
     }
 }
 
@@ -182,6 +183,7 @@ header h2 {
     }
     
     .removeOneButton {
+        transition: 0.1s all;
         background-color: #fb923c;
         width: 40px;
         height: 40px;
@@ -190,6 +192,10 @@ header h2 {
         justify-content: center;
         align-items: center;
         color: #9a3412;
+        
+        &:active {
+            scale: 0.95;
+        }
     }
 }
 
