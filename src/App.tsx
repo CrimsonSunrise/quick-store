@@ -140,8 +140,8 @@ function App() {
                     produtoName.innerHTML = key;
 
                     let produtoCount = document.createElement("span");
-                    produtoCount.className = "produtoCount";
-                    produtoCount.innerHTML = `Count: ${value.toString()}`;
+                    produtoCount.className = "produtoAmount";
+                    produtoCount.innerHTML = `<span>amount:</span> ${value.toString()}`;
 
                     let removeOneButton = document.createElement("div");
                     removeOneButton.innerHTML = "-1";
@@ -374,7 +374,7 @@ function App() {
                     </div>
                 </div>
 
-                <div ref={usuario} className="usuario">
+                {/* <div ref={usuario} className="usuario">
                     <h3>Complete seu cadastro</h3>
 
                     <div>
@@ -426,7 +426,7 @@ function App() {
                             Cadastrar e finalizar
                         </button>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
