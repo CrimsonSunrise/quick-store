@@ -1,0 +1,225 @@
+.App {
+    user-select: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8fafc;
+    height: 100vh;
+    width: 100vw;
+}
+
+header {
+    flex-shrink: 0;
+    background-color: #334155;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+
+header h2 {
+    margin: 0;
+    padding: 20px;
+    color: #FFF;
+}
+
+.produtos {
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+    padding: 10px;
+    
+    .produto {
+        transition: 0.1s all;
+        position: relative;
+        width: 110px;
+        height: 110px;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        // background-color: rgb(255, 217, 217);
+        // background-color: white;
+        border-radius: 8px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 6px;
+        
+        &:active {
+            scale: 0.95;
+        }
+        
+        span {
+            // text-transform: uppercase;
+            font-size: 20px;
+            color: #222;
+        }
+        
+        div {
+            position: absolute;
+            bottom: 10px;
+            color: #666;
+        }
+        
+        .produtoCount {
+            position: absolute;
+            background-color: #3b82f6;
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            top: 5px;
+            right: 5px;
+        }
+    }
+}
+
+.mask {
+    transition: 0.1s all;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    
+    &.active {
+        background-color: rgba(0, 0, 0, 0.384);
+        pointer-events: all;
+    }
+}
+
+.carrinho {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    flex-shrink: 0;
+    justify-self: flex-end !important;
+    background-color: #334155;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.carrinho.active {
+    box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.carrinhoInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #43546b;
+    
+    * {
+        pointer-events: none;
+    }
+    
+    .carrinhoTotal {
+        font-size: 22px;
+    }
+}
+
+.botoesAcao {
+    display: flex;
+    gap: 5px;
+}
+
+.listaCarrinho {
+    transition: 0.2s all;
+    height: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: auto;
+}
+
+.carrinho.active .listaCarrinho {
+    height: 350px;
+}
+
+.listaProdutos {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+}
+
+.listaProdutos div {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    color: #222;
+    font-weight: 600;
+    
+}
+
+.listaBotoes {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    
+    div {
+        transition: 0.1s all;
+        background-color: #ef4444;
+        padding: 10px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        
+        &.active {
+            scale: 0.95;
+        }
+    }
+}
+
+.usuario {
+    transition: 0.2s all;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: thistle;
+    gap: 10px;
+    left: 100%;
+}
+
+.usuario.active {
+    left: 0;
+}
+
+.usuario div {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 5px;
+}
+
+.usuario input {
+    width: 300px;
+    background-color: white;
+    border-radius: 3px;
+    padding: 10px 15px;
+    border: 0;
+    outline: 0;
+}
+
+.usuario div span {
+    text-align: left;
+}
+
+.finalizarBotoes {
+    display: flex;
+    flex-direction: row !important;
+}
