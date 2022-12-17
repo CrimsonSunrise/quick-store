@@ -74,6 +74,7 @@ function App() {
         if (prods) {
             setCarrinhoQtd(prods.split(",")?.length);
         }
+		calcularProdutos();
     }, []);
 
     const [carrinhoQtd, setCarrinhoQtd] = useState(0);
@@ -200,10 +201,10 @@ function App() {
                             }}
                         >
 							{
-								listCart.map(item => {
+								listCart.map((item, lindex) => {
 									if (item.name == produto.nome) {
 										return (
-											<div className="produtoCount">{item.count}</div>
+											<div key={`p-${lindex}`} className="produtoCount">{item.count}</div>
 										)
 									}
 								})
