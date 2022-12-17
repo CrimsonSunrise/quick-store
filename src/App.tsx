@@ -72,7 +72,7 @@ function App() {
     useEffect(() => {
         const prods = localStorage.getItem("produtos");
         if (prods) {
-            setCarrinhoQtd(prods.split(".")?.length);
+            setCarrinhoQtd(JSON.parse(prods).length);
         }
         calcularProdutos();
     }, []);
