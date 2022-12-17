@@ -72,9 +72,9 @@ function App() {
     useEffect(() => {
         const prods = localStorage.getItem("produtos");
         if (prods) {
-            setCarrinhoQtd(prods.split(",")?.length);
+            setCarrinhoQtd(prods.split(".")?.length);
         }
-		calcularProdutos();
+        calcularProdutos();
     }, []);
 
     const [carrinhoQtd, setCarrinhoQtd] = useState(0);
@@ -85,10 +85,10 @@ function App() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [endereco, setEndereco] = useState("");
-	
-	const [listCart, setListCart] = useState([]);
-	
-	const [isCarrinhoVisible, setIsCarrinhoVisible] = useState(false);
+
+    const [listCart, setListCart] = useState([]);
+
+    const [isCarrinhoVisible, setIsCarrinhoVisible] = useState(false);
 
     const [isMaskVisible, setIsMaskVisible] = useState(false);
 
@@ -100,66 +100,141 @@ function App() {
 
     const calcularProdutos = () => {
         if (localStorage.getItem("produtos") !== "") {
-            const listaProdutosArray = localStorage
-                .getItem("produtos")
-                .split(".");
-            const listaProdutos: any = {};
 			
-            listaProdutosArray.forEach(function (i) {
+			let storageProdutos = localStorage.getItem("produtos");
+			// console.log(storageProdutos)
+			
+			// setCarrinhoQtd(JSON.parse(localStorage.getItem("produtos"))?.length);
+			
+            const listaProdutosArray = JSON.parse(localStorage.getItem("produtos"));
+            const listaProdutos = {} as any;
+
+			setTotal(0);
+            listaProdutosArray?.map(function (i:any) {
+				produtos.forEach(p => {
+					if (p.nome == i) {
+						setTotal(total + p.preco);
+					}
+				})
                 listaProdutos[i] = (listaProdutos[i] || 0) + 1;
             });
 
             divListaProdutos.current.innerHTML = "";
 			
-			// setListCart(listaProdutos);
 			
-			let newList = []
-			
+            // setListCart(listaProdutos);
+
+            let newList = [];
+
             for (const [key, value] of Object.entries(listaProdutos)) {
-				newList.push({
-					name: key,
-					count: value
-				})
-                divListaProdutos.current.innerHTML += `<div><span>${key}</span><span>${value}</span></div>`;
+                if (key != "") {
+                    newList.push({
+                        name: key,
+                        count: value,
+                    });
+					
+					
+					
+                    let div = document.createElement("div");
+                    let produtoName = document.createElement("span");
+                    produtoName.innerHTML = key;
+
+                    let produtoCount = document.createElement("span");
+                    produtoCount.className = "produtoCount";
+                    produtoCount.innerHTML = `Count: ${value.toString()}`;
+
+                    let removeOneButton = document.createElement("div");
+                    removeOneButton.innerHTML = "-1";
+                    removeOneButton.className = "removeOneButton";
+                    removeOneButton.addEventListener("click", () => {
+						// produtos.forEach(p => {
+						// 	if (p.nome == key) {
+						// 		setTotal(total - p.preco);
+						// 	}
+						// })
+                        // console.log(key);
+                        const storage = JSON.parse(localStorage.getItem("produtos"));
+						// console.log(storage)
+						for (let i = 0; i < storage.length; i++) {
+							if (key === storage[i]) {
+								// console.log(storage[i])
+								storage.splice(i, 1);
+								break;
+							}
+						}
+						// console.log(storage)
+						localStorage.setItem("produtos", JSON.stringify(storage))
+						
+                        calcularProdutos();
+						let newTotal = 0;
+						// setTotal(0);
+						storage.map(function (i:any) {
+							produtos.forEach(p => {
+								if (p.nome == i) {
+									newTotal+= p.preco;
+								}
+							})
+							// listaProdutos[i] = (listaProdutos[i] || 0) + 1;
+						});
+						setTotal(newTotal);
+                    });
+
+                    div.appendChild(produtoName);
+                    div.appendChild(produtoCount);
+                    div.appendChild(removeOneButton);
+
+                    divListaProdutos.current.appendChild(div);
+                }
+                // divListaProdutos.current.innerHTML += `<div><span>${key}</span><span>${value} <div className="removeOne" onClick={() =>{ remoteOneItem(${key}) }}>-1</div></span></div>`;
             }
-			setListCart(newList);
+            setListCart(newList);
         }
     };
 
+    // const removeOneItem = (item: any) => {
+
+    // 	console.log("a")
+
+    // }
+
     const fecharCarrinho = () => {
         // carrinho.current.className = "carrinho";
-		setIsCarrinhoVisible(false);
-		setIsMaskVisible(false);
+        setIsCarrinhoVisible(false);
+        setIsMaskVisible(false);
     };
 
     const adicionarItem = (produto: any) => {
         setCarrinhoQtd(carrinhoQtd + 1);
-        const prods = localStorage.getItem("produtos");
 		
-        if (prods) {
-			
-            localStorage.setItem("produtos", prods + "." + produto.nome);
-			
-        } else {
-			
-            localStorage.setItem("produtos", produto.nome);
-			
-        }
-
-        setTotal(total + produto.preco);
+        let prods = localStorage.getItem("produtos") as any
+		
+		if (prods == "" || prods == null) {
+			prods = []
+		} else {
+			prods = JSON.parse(prods)			
+		}
+		
+		prods.push(produto.nome)
+		
+		// console.log(prods)
+		
+		
+        localStorage.setItem("produtos", JSON.stringify(prods));
+        
+        // setTotal(total + produto.preco);
 
         calcularProdutos();
     };
 
     const limparCarrinho = () => {
-		setListCart([]);
+        setListCart([]);
         setCarrinhoQtd(0);
         setTotal(0);
         localStorage.setItem("produtos", "");
         divListaProdutos.current.innerHTML = "";
         carrinho.current.className = "carrinho";
-		setIsCarrinhoVisible(false);
-		setIsMaskVisible(false);
+        setIsCarrinhoVisible(false);
+        setIsMaskVisible(false);
     };
 
     const cadastrarUsuario = () => {
@@ -200,16 +275,19 @@ function App() {
                                 }`,
                             }}
                         >
-							{
-								listCart.map((item, lindex) => {
-									if (item.name == produto.nome) {
-										return (
-											<div key={`p-${lindex}`} className="produtoCount">{item.count}</div>
-										)
-									}
-								})
-							}
-							
+                            {listCart.map((item, lindex) => {
+                                if (item.name == produto.nome) {
+                                    return (
+                                        <div
+                                            key={`p-${lindex}`}
+                                            className="produtoCount"
+                                        >
+                                            {item.count}
+                                        </div>
+                                    );
+                                }
+                            })}
+
                             <span>{produto.nome}</span>
                             <div>€ {produto.preco.toFixed(2)}</div>
                             {/* <button
@@ -232,24 +310,29 @@ function App() {
                 }}
             ></div>
 
-            <div ref={carrinho} className={`carrinho ${isCarrinhoVisible == true ? "active" : ""}`}>
-                <div className="carrinhoInfo"
-					onClick={() => {
-						setIsCarrinhoVisible(!isCarrinhoVisible);
-						setIsMaskVisible(!isMaskVisible);
-					}}
-				>
-					
+            <div
+                ref={carrinho}
+                className={`carrinho ${
+                    isCarrinhoVisible == true ? "active" : ""
+                }`}
+            >
+                <div
+                    className="carrinhoInfo"
+                    onClick={() => {
+                        setIsCarrinhoVisible(!isCarrinhoVisible);
+                        setIsMaskVisible(!isMaskVisible);
+                    }}
+                >
                     <span>
-						{ carrinhoQtd == 0 && ``}
-						{ carrinhoQtd == 1 && `${carrinhoQtd} item`}
-						{ carrinhoQtd > 1 && `${carrinhoQtd} items`}
+                        {carrinhoQtd == 0 && ``}
+                        {carrinhoQtd == 1 && `${carrinhoQtd} item`}
+                        {carrinhoQtd > 1 && `${carrinhoQtd} items`}
                     </span>
-					
-					<div className="carrinhoTotal">
-						<b>Total € {total.toFixed(2)}</b>
-					</div>
-					
+
+                    <div className="carrinhoTotal">
+                        <b>Total € {total.toFixed(2)}</b>
+                    </div>
+
                     {/* <div className="botoesAcao">
                         <button
                             

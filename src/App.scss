@@ -63,7 +63,7 @@ header h2 {
         
         .produtoCount {
             position: absolute;
-            background-color: #3b82f6;
+            background-color: #334154;
             color: white;
             width: 30px;
             height: 30px;
@@ -156,8 +156,25 @@ header h2 {
     padding: 20px;
     border-radius: 5px;
     color: #222;
+    gap: 20px;
     font-weight: 600;
+    align-items: center;
     
+    .produtoCount {
+        flex: 1;
+        text-align: right;
+    }
+    
+    .removeOneButton {
+        background-color: #ef4444;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
 }
 
 .listaBotoes {
