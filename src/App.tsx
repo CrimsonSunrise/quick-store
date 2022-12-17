@@ -52,7 +52,7 @@ const produtos = [
         color: "#a5f3fc",
     },
     {
-        nome: "Mini Jelly",
+        nome: "Mini Jellies",
         preco: 1.5,
         color: "#bbf7d0",
     },
