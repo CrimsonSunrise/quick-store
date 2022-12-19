@@ -200,6 +200,10 @@ function App() {
                 }
                 // divListaProdutos.current.innerHTML += `<div><span>${key}</span><span>${value} <div className="removeOne" onClick={() =>{ remoteOneItem(${key}) }}>-1</div></span></div>`;
             }
+            const prods = localStorage.getItem("produtos");
+            if (prods) {
+                setCarrinhoQtd(JSON.parse(prods).length);
+            }
             setListCart(newList);
         }
     };
