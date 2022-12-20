@@ -43,8 +43,8 @@ header h2 {
     .produto {
         // transition: 0.1s all;
         position: relative;
-        width: 60px;
-        height: 60px;
+        width: 24vw;
+        height: 24vw;
         padding: 5px;
         display: flex;
         justify-content: center;
@@ -63,7 +63,7 @@ header h2 {
         span {
             // text-transform: uppercase;
             // font-size: 20px;
-            font-size: 16px;
+            font-size: 4.2vw;
             color: #222;
         }
         
